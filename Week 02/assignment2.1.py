@@ -13,36 +13,40 @@
 # This is the first function you have to implement. You are passed a dataframe object. We've also registered the dataframe in the ApacheSparkSQL catalog - so you can also issue queries against the "washing" table using "spark.sql()". Hint: To get an idea about the contents of the catalog you can use: spark.catalog.listTables().
 # So now it's time to implement your first function. You are free to use the dataframe API, SQL or RDD API. In case you want to use the RDD API just obtain the encapsulated RDD using "df.rdd". You can test the function by running one of the three last cells of this notebook, but please make sure you run the cells from top to down since some are dependant of each other...
 
-# In[16]:
+# In[1]:
 
 
 #Please implement a function returning the number of rows in the dataframe
 def count(df,spark):
     #TODO Please enter your code here, you are not required to use the template code below
+    return df.count()
+    #return spark.sql('select count as cnt from washing').first().cnt
     #some reference: https://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame
-    return spark.sql('select count as cnt from washing').first().cnt
+    #return spark.sql('select ### as cnt from washing').first().cnt
 
 
 # Now it's time to implement the second function. Please return an integer containing the number of fields. The most easy way to get this is using the dataframe API. Hint: You might find the dataframe API documentation useful: http://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame
 
-# In[25]:
+# In[2]:
 
 
 def getNumberOfFields(df,spark):
     #TODO Please enter your code here, you are not required to use the template code below
+    return len(df.columns)
     #some reference: https://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame
-    return len(df.collect())
+    #return len(df.###)
 
 
 # Finally, please implement a function which returns a (python) list of string values of the field names in this data frame. Hint: Just copy&past doesn't work because the auto-grader will create a random data frame for testing, so please use the data frame API as well. Again, this is the link to the documentation: http://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame
 
-# In[30]:
+# In[3]:
 
 
 def getFieldNames(df,spark):
     #TODO Please enter your code here, you are not required to use the template code below
-    #some reference: https://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame
     return df.columns
+    #some reference: https://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame
+    #return df.###
 
 
 # ### PLEASE DON'T REMOVE THIS BLOCK - THE FOLLOWING CODE IS NOT GRADED
@@ -52,26 +56,14 @@ def getFieldNames(df,spark):
 
 # Now it is time to grab a PARQUET file and create a dataframe out of it. Using SparkSQL you can handle it like a database. 
 
-# In[3]:
+# In[4]:
 
 
 get_ipython().system(u'wget https://github.com/IBM/coursera/blob/master/coursera_ds/washing.parquet?raw=true')
 get_ipython().system(u'mv washing.parquet?raw=true washing.parquet')
 
 
-# In[8]:
-
-
-spark.sql('select * from washing')
-
-
-# In[11]:
-
-
-spark.catalog.listTables()
-
-
-# In[4]:
+# In[5]:
 
 
 df = spark.read.parquet('washing.parquet')
@@ -81,7 +73,7 @@ df.show()
 
 # The following cell can be used to test your count function
 
-# In[18]:
+# In[6]:
 
 
 count(df,spark)
@@ -89,7 +81,7 @@ count(df,spark)
 
 # The following cell can be used to test your getNumberOfFields function
 
-# In[26]:
+# In[7]:
 
 
 getNumberOfFields(df,spark)
@@ -97,7 +89,7 @@ getNumberOfFields(df,spark)
 
 # The following cell can be used to test your getFieldNames function
 
-# In[31]:
+# In[8]:
 
 
 getFieldNames(df,spark)
